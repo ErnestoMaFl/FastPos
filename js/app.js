@@ -53,16 +53,17 @@ function iniciarEscaner() {
   
   const config = { 
     fps: 10,
-    // Caja dinámicamente para que NUNCA rompa la interfaz
-    qrbox: function(viewfinderWidth, viewfinderHeight) {
-        return {
-            width: viewfinderWidth * 0.75, 
-            height: 90
-        };
-    },
-    aspectRatio: 2.0 
+    // Tamaño fijo de 250x100. Cabe perfecto en la pantalla del móvil sin reventar el cálculo interno.
+    qrbox: { width: 250, height: 100 }, 
+    // Optimizador: Le decimos que NO busque QR ni formatos raros, SOLO códigos de barras (EAN_13 es el de 13 dígitos de México)
+    formatsToSupport: [ 
+      Html5QrcodeSupportedFormats.EAN_13, 
+      Html5QrcodeSupportedFormats.EAN_8,
+      Html5QrcodeSupportedFormats.UPC_A
+    ]
   };
   
+  // No usamos aspectRatio. Dejamos que la cámara use su formato nativo.
   html5QrCode.start(
     { facingMode: "environment" }, 
     config, 
@@ -206,3 +207,30 @@ function confirmar(event) {
 
   volverBusqueda();
 }
+
+// ==========================================
+// 7. AUTO-VERSIONADO (VERIFICADOR DE GITHUB PAGES)
+// ==========================================
+function checarVersionGithub() {
+  // CAMBIA ESTO por tus datos reales de GitHub
+  const githubUser = 'ErnestoMaFl'; 
+  const githubRepo = 'FastPos';
+  
+  fetch(`https://api.github.com/repos/${githubUser}/${githubRepo}/commits/main`)
+    .then(response => response.json())
+    .then(data => {
+      // Tomamos los primeros 7 caracteres del hash del commit
+      const hash = data.sha.substring(0, 7);
+      // Tomamos la fecha exacta del commit y la formateamos
+      const fecha = new Date(data.commit.author.date).toLocaleString('es-MX');
+      
+      document.getElementById('footer-version').innerText = `App Version: rev-${hash} (${fecha})`;
+    })
+    .catch(error => {
+      console.error("Error al obtener la versión de GitHub:", error);
+      document.getElementById('footer-version').innerText = `App Version: Local / Desconectado`;
+    });
+}
+
+// Ejecutamos la validación en cuanto cargue el script
+checarVersionGithub();
