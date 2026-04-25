@@ -2,38 +2,88 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Buscador Rápido POS</title>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
   <style>
-    body { font-family: system-ui, -apple-system, sans-serif; padding: 10px; margin: 0; background: #f4f4f5; }
+    /* Estilos base optimizados para móvil */
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 10px; margin: 0; background: #f4f4f5; touch-action: manipulation; }
+    
+    /* PANTALLA BUSQUEDA */
+    #pantalla-busqueda { display: block; }
     .search-container { display: flex; gap: 10px; margin-bottom: 15px; }
-    input { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 6px; }
-    input:focus { border-color: #0056b3; outline: none; }
-    #micBtn { background: #e11d48; color: white; border: none; padding: 0 20px; font-size: 1.2em; border-radius: 6px; cursor: pointer; }
-    .producto { background: white; border-bottom: 1px solid #eee; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; margin-bottom: 5px; }
+    #busqueda { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 8px; }
+    #busqueda:focus { border-color: #0056b3; outline: none; }
+    #micBtn { background: #e11d48; color: white; border: none; padding: 0 20px; font-size: 1.4em; border-radius: 8px; cursor: pointer; }
+    
+    .producto { background: white; border-bottom: 1px solid #eee; padding: 18px 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; active: background: #f0f0f0; }
     .nombre { font-size: 1.1em; font-weight: bold; color: #333; }
     .precio { font-size: 1.3em; font-weight: 900; color: #16a34a; }
+
+    /* PANTALLA CANTIDAD (Oculta por defecto) */
+    #pantalla-cantidad { display: none; padding-top: 10px; }
+    .header-cantidad { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .btn-volver { background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 1.1em; cursor: pointer; }
+    
+    .producto-detalle { background: white; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .producto-detalle h2 { margin: 0 0 10px 0; font-size: 1.5em; color: #1e293b; }
+    .producto-detalle .precio-unitario { color: #64748b; font-size: 1.2em; }
+    
+    .input-wrapper { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+    .input-wrapper label { font-size: 1.2em; font-weight: bold; color: #333; }
+    /* Configuración para que el input sea enorme y fácil de tocar */
+    #inputCantidad { font-size: 3em; text-align: center; padding: 10px; border: 3px solid #0056b3; border-radius: 8px; width: 100%; box-sizing: border-box; font-weight: bold; color: #1e293b; }
+    
+    .total-box { background: #16a34a; color: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 2em; font-weight: 900; margin-bottom: 20px; }
+    
+    .btn-confirmar { background: #0ea5e9; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.5em; width: 100%; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="search-container">
-    <button id="micBtn" onclick="startVoice()">🎤</button>
-    <input type="text" id="busqueda" placeholder="Buscar producto..." oninput="filtrar()" autofocus autocomplete="off">
+
+  <div id="pantalla-busqueda">
+    <div class="search-container">
+      <button id="micBtn" onclick="startVoice()">🎤</button>
+      <input type="text" id="busqueda" placeholder="Buscar producto..." oninput="filtrar()" autofocus autocomplete="off">
+    </div>
+    <div id="resultados"></div>
   </div>
 
-  <div id="resultados"></div>
+  <div id="pantalla-cantidad">
+    <div class="header-cantidad">
+      <button class="btn-volver" onclick="volverBusqueda()">← Cancelar</button>
+    </div>
+    
+    <div class="producto-detalle">
+      <h2 id="selNombre">Nombre del Producto</h2>
+      <div class="precio-unitario" id="selPrecio">$0.00 x unidad</div>
+    </div>
+
+    <form onsubmit="confirmar(event)">
+      <div class="input-wrapper">
+        <label for="inputCantidad">Cantidad:</label>
+        <input type="number" id="inputCantidad" inputmode="decimal" step="any" value="1" oninput="calcularTotal()">
+      </div>
+
+      <div class="total-box">
+        Total: <span id="selTotal">$0.00</span>
+      </div>
+
+      <button type="submit" class="btn-confirmar">✓ Agregar (Enter)</button>
+    </form>
+  </div>
 
   <script>
     let productos = [];
+    let resultadosActuales = [];
+    let productoSeleccionado = null;
     let fuse;
 
-    // Solo quitamos acentos para que "jamon" y "jamón" empaten perfecto. Fuse ya maneja minúsculas.
     function quitarAcentos(texto) {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    // Cargar el CSV real
+    // Cargar CSV
     fetch('productos.csv')
       .then(res => res.text())
       .then(csv => {
@@ -43,18 +93,14 @@
         productos = lineas.slice(1).filter(l => l.trim() !== '').map(l => {
           const vals = l.split(',');
           let obj = {};
-          // Mapeo dinámico según tus cabeceras
           cabeceras.forEach((h, i) => obj[h] = vals[i] ? vals[i].trim() : '');
-          
-          // Llave limpia oculta para que busque más rápido
           obj.SearchKey = quitarAcentos(obj.Producto || '');
           return obj;
         });
 
-        // Configuración de Fuse.js
         fuse = new Fuse(productos, {
           keys: ['SearchKey'],
-          threshold: 0.45, // ¡Umbral subido a 0.45! Esto perdona burradas y abreviaciones cortas.
+          threshold: 0.45,
           distance: 100,
           useExtendedSearch: true
         });
@@ -69,27 +115,91 @@
       }
 
       const textoBuscado = quitarAcentos(inputVal);
-      // Top 5 directo a la vena
-      const resultado = fuse.search(textoBuscado).map(r => r.item).slice(0, 5);
-      mostrar(resultado);
+      resultadosActuales = fuse.search(textoBuscado).map(r => r.item).slice(0, 5);
+      mostrar(resultadosActuales);
     }
 
     function mostrar(lista) {
       const div = document.getElementById('resultados');
       if (lista.length === 0) {
-        div.innerHTML = '<div class="producto" style="color:#666;">Sin resultados</div>';
+        div.innerHTML = '<div class="producto" style="color:#666; justify-content:center;">Sin resultados</div>';
         return;
       }
       
-      div.innerHTML = lista.map(p =>
-        `<div class="producto">
+      // Añadimos el evento onclick pasándole el índice del array resultadosActuales
+      div.innerHTML = lista.map((p, index) =>
+        `<div class="producto" onclick="abrirCantidad(${index})">
           <span class="nombre">${p.Producto || 'N/A'}</span>
           <span class="precio">$${p.Precio || '0.00'}</span>
         </div>`
       ).join('');
     }
 
-    // Dictado por voz
+    // --- NUEVO FLUJO DE CANTIDAD ---
+
+    function limpiarPrecio(precioStr) {
+      // Quita signos de peso o comas para poder multiplicar
+      if (!precioStr) return 0;
+      return parseFloat(precioStr.replace(/[^0-9.-]+/g,"")) || 0;
+    }
+
+    function abrirCantidad(index) {
+      productoSeleccionado = resultadosActuales[index];
+      
+      // Cambio de pantalla
+      document.getElementById('pantalla-busqueda').style.display = 'none';
+      document.getElementById('pantalla-cantidad').style.display = 'block';
+
+      // Llenar datos
+      document.getElementById('selNombre').innerText = productoSeleccionado.Producto || 'N/A';
+      document.getElementById('selPrecio').innerText = `$${productoSeleccionado.Precio || '0.00'} x unidad`;
+
+      // Resetear input de cantidad a 1 y auto-enfocar
+      const inputCant = document.getElementById('inputCantidad');
+      inputCant.value = '1';
+      
+      calcularTotal();
+
+      // Forzar enfoque y selección (el usuario no tiene que borrar el '1', si teclea algo lo sobrescribe)
+      inputCant.focus();
+      inputCant.select();
+    }
+
+    function calcularTotal() {
+      if (!productoSeleccionado) return;
+      const cant = parseFloat(document.getElementById('inputCantidad').value) || 0;
+      const precioNum = limpiarPrecio(productoSeleccionado.Precio);
+      const total = cant * precioNum;
+      
+      document.getElementById('selTotal').innerText = `$${total.toFixed(2)}`;
+    }
+
+    function volverBusqueda() {
+      // Regresa a la vista original de forma rápida
+      document.getElementById('pantalla-cantidad').style.display = 'none';
+      document.getElementById('pantalla-busqueda').style.display = 'block';
+      
+      const searchInput = document.getElementById('busqueda');
+      searchInput.value = ''; // Limpiamos la búsqueda anterior para estar listos para el sig. producto
+      mostrar([]); // Limpia la lista visual
+      
+      // Reenfocamos la barra de búsqueda general
+      searchInput.focus();
+    }
+
+    function confirmar(event) {
+      event.preventDefault(); // Evita que la página se recargue por el <form>
+      
+      // AQUI IRÍA LA LÓGICA PARA AGREGAR EL PRODUCTO AL CARRITO O TICKET
+      // const cantidadFinal = parseFloat(document.getElementById('inputCantidad').value);
+      // ticket.push({ producto: productoSeleccionado, cantidad: cantidadFinal });
+      
+      // Regresamos al flujo principal instantáneamente
+      volverBusqueda();
+    }
+
+    // --- FIN NUEVO FLUJO ---
+
     function startVoice() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
