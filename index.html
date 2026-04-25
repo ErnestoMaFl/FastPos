@@ -55,7 +55,7 @@
         fuse = new Fuse(productos, {
           keys: ['SearchKey'],
           threshold: 0.45, // ¡Umbral subido a 0.45! Esto perdona burradas y abreviaciones cortas.
-          ignoreLocation: true,
+          distance: 100,
           useExtendedSearch: true
         });
       })
