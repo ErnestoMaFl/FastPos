@@ -1,31 +1,33 @@
-Producto,Precio
-Coca Cola Original 2.5L Retornable,38.00
-Coca Cola Original 600ml,20.00
-Huevos Blancos San Juan 18 pzas,65.00
-Pan Blanco Bimbo Grande,52.00
-Leche Lala Entera 1L,28.00
-Aceite Mixto 123 1L,42.00
-Azucar Estandar 1Kg,35.00
-Frijoles Refritos Isadora Peruanos 430g,22.00
-Atun Dolores en Agua 140g,23.00
-Papel Higienico Petalo Rendimax 4 Rollos,35.00
-Jabon de Lavanderia Zote Rosa 400g,25.00
-Cafe Soluble Nescafe Clasico 120g,85.00
-Arroz Super Extra Verde Valle 1Kg,42.00
-Pasta Fideo La Moderna 200g,11.00
-Sal de Mesa La Fina 1Kg,20.00
-Mayonesa McCormick con Limon 390g,48.00
-Sabritas Sal Original 170g,45.00
-Maruchan Sabor Camaron con Limon y Habanero,18.00
-Galletas Marias Gamesa 170g,19.00
-Pastelito Gansito Marinela 50g,18.00
-Pure de Tomate Del Fuerte 210g,10.00
-Chiles Jalapenos La Costena Lata 340g,24.00
-Jamon Virginia de Pavo FUD 250g,45.00
-Queso Panela FUD 200g,48.00
-Cerveza Victoria Laton 473ml,28.00
-Cerveza Corona Extra Lata 355ml,22.00
-Tortillinas Tia Rosa 12 pzas,28.00
-Consome Knorr Suiza 8 Cubos,18.00
-Cereal Zucaritas Kelloggs 300g,55.00
-Formula Lactea Nutrileche 1L,22.00
+Codigo,Producto,Precio
+7501000000001,Coca Cola Original 2.5L Retornable,38.00
+7501000000002,Coca Cola Original 600ml,20.00
+7501000000003,Huevos Blancos San Juan 18 pzas,65.00
+7501000000004,Pan Blanco Bimbo Grande,52.00
+7501000000005,Leche Lala Entera 1L,28.00
+7501000000006,Aceite Mixto 123 1L,42.00
+7501000000007,Azucar Estandar 1Kg,35.00
+7501000000008,Frijoles Refritos Isadora Peruanos 430g,22.00
+7501000000009,Atun Dolores en Agua 140g,23.00
+7501000000010,Papel Higienico Petalo Rendimax 4 Rollos,35.00
+7501000000011,Jabon de Lavanderia Zote Rosa 400g,25.00
+7501000000012,Cafe Soluble Nescafe Clasico 120g,85.00
+7501000000013,Arroz Super Extra Verde Valle 1Kg,42.00
+7501000000014,Pasta Fideo La Moderna 200g,11.00
+7501000000015,Sal de Mesa La Fina 1Kg,20.00
+7501000000016,Mayonesa McCormick con Limon 390g,48.00
+7501000000017,Sabritas Sal Original 170g,45.00
+7501000000018,Maruchan Sabor Camaron con Limon y Habanero,18.00
+7501000000019,Galletas Marias Gamesa 170g,19.00
+7501000000020,Pastelito Gansito Marinela 50g,18.00
+7501000000021,Pure de Tomate Del Fuerte 210g,10.00
+7501000000022,Chiles Jalapenos La Costena Lata 340g,24.00
+7501000000023,Jamon Virginia de Pavo FUD 250g,45.00
+7501000000024,Queso Panela FUD 200g,48.00
+7501000000025,Cerveza Victoria Laton 473ml,28.00
+7501000000026,Cerveza Corona Extra Lata 355ml,22.00
+7501000000027,Tortillinas Tia Rosa 12 pzas,28.00
+7501000000028,Consome Knorr Suiza 8 Cubos,18.00
+7501000000029,Cereal Zucaritas Kelloggs 300g,55.00
+7501000000030,Formula Lactea Nutrileche 1L,22.00
+7501000393022,Galletas Principe, 15.00
+7503001670355,Paleta Bolonia Triple Chocolate, 30.00

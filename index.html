@@ -5,22 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Buscador Rápido POS</title>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  
   <style>
-    /* Estilos base optimizados para móvil */
     body { font-family: system-ui, -apple-system, sans-serif; padding: 10px; margin: 0; background: #f4f4f5; touch-action: manipulation; }
     
     /* PANTALLA BUSQUEDA */
     #pantalla-busqueda { display: block; }
-    .search-container { display: flex; gap: 10px; margin-bottom: 15px; }
+    
+    /* ZONA DEL ESCÁNER */
+    #reader-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 10px; background: #000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    #reader { width: 100%; border: none; }
+    #reader video { object-fit: cover; }
+
+    .search-container { display: flex; gap: 10px; margin-bottom: 10px; }
     #busqueda { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 8px; }
     #busqueda:focus { border-color: #0056b3; outline: none; }
     #micBtn { background: #e11d48; color: white; border: none; padding: 0 20px; font-size: 1.4em; border-radius: 8px; cursor: pointer; }
     
-    .producto { background: white; border-bottom: 1px solid #eee; padding: 18px 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; active: background: #f0f0f0; }
+    .producto { background: white; border-bottom: 1px solid #eee; padding: 18px 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; }
+    .producto:active { background: #e2e8f0; }
+    .nombre-box { display: flex; flex-direction: column; }
     .nombre { font-size: 1.1em; font-weight: bold; color: #333; }
+    .codigo-txt { font-size: 0.8em; color: #64748b; margin-top: 4px; }
     .precio { font-size: 1.3em; font-weight: 900; color: #16a34a; }
 
-    /* PANTALLA CANTIDAD (Oculta por defecto) */
+    /* PANTALLA CANTIDAD */
     #pantalla-cantidad { display: none; padding-top: 10px; }
     .header-cantidad { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .btn-volver { background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 1.1em; cursor: pointer; }
@@ -31,7 +41,6 @@
     
     .input-wrapper { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
     .input-wrapper label { font-size: 1.2em; font-weight: bold; color: #333; }
-    /* Configuración para que el input sea enorme y fácil de tocar */
     #inputCantidad { font-size: 3em; text-align: center; padding: 10px; border: 3px solid #0056b3; border-radius: 8px; width: 100%; box-sizing: border-box; font-weight: bold; color: #1e293b; }
     
     .total-box { background: #16a34a; color: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 2em; font-weight: 900; margin-bottom: 20px; }
@@ -42,10 +51,16 @@
 <body>
 
   <div id="pantalla-busqueda">
+    
+    <div id="reader-container">
+      <div id="reader"></div>
+    </div>
+
     <div class="search-container">
       <button id="micBtn" onclick="startVoice()">🎤</button>
-      <input type="text" id="busqueda" placeholder="Buscar producto..." oninput="filtrar()" autofocus autocomplete="off">
+      <input type="text" id="busqueda" placeholder="Buscar por nombre o código..." oninput="filtrar()" autocomplete="off">
     </div>
+    
     <div id="resultados"></div>
   </div>
 
@@ -64,11 +79,9 @@
         <label for="inputCantidad">Cantidad:</label>
         <input type="number" id="inputCantidad" inputmode="decimal" step="any" value="1" oninput="calcularTotal()">
       </div>
-
       <div class="total-box">
         Total: <span id="selTotal">$0.00</span>
       </div>
-
       <button type="submit" class="btn-confirmar">✓ Agregar (Enter)</button>
     </form>
   </div>
@@ -78,6 +91,8 @@
     let resultadosActuales = [];
     let productoSeleccionado = null;
     let fuse;
+    let html5QrCode;
+    let scannerActivo = false;
 
     function quitarAcentos(texto) {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -98,15 +113,48 @@
           return obj;
         });
 
+        // Fuse ahora busca tanto por nombre como por código
         fuse = new Fuse(productos, {
-          keys: ['SearchKey'],
-          threshold: 0.45,
+          keys: ['SearchKey', 'Codigo'],
+          threshold: 0.3, // Un poco más estricto para evitar falsos positivos con números
           distance: 100,
           useExtendedSearch: true
         });
+
+        iniciarEscaner(); // Inicia la cámara cuando los datos estén listos
       })
       .catch(err => console.error("Error cargando productos.csv:", err));
 
+    // --- LÓGICA DE ESCÁNER DE CÓDIGO DE BARRAS ---
+    function iniciarEscaner() {
+      html5QrCode = new Html5Qrcode("reader");
+      const config = { 
+        fps: 10, 
+        qrbox: { width: 250, height: 100 }, 
+        aspectRatio: 1.777778 // Formato horizontal estándar
+      };
+      
+      // Intentar usar siempre la cámara trasera (environment)
+      html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
+        .then(() => { scannerActivo = true; })
+        .catch(err => console.error("Error iniciando cámara:", err));
+    }
+
+    // Lo que sucede cuando la cámara detecta un código
+    function onScanSuccess(decodedText) {
+      // 1. Busca si el código existe exactamente en el array
+      const productoEncontrado = productos.find(p => p.Codigo === decodedText);
+      
+      if (productoEncontrado) {
+        // Vibración corta para feedback háptico (funciona en Android)
+        if (navigator.vibrate) navigator.vibrate(100); 
+        
+        // 2. Manda el producto directo a la pantalla de cobro
+        abrirCantidadDirecto(productoEncontrado);
+      }
+    }
+
+    // --- LÓGICA DE BÚSQUEDA TEXTO/VOZ ---
     function filtrar() {
       const inputVal = document.getElementById('busqueda').value;
       if (inputVal.trim() === '' || !fuse) {
@@ -126,86 +174,84 @@
         return;
       }
       
-      // Añadimos el evento onclick pasándole el índice del array resultadosActuales
       div.innerHTML = lista.map((p, index) =>
         `<div class="producto" onclick="abrirCantidad(${index})">
-          <span class="nombre">${p.Producto || 'N/A'}</span>
+          <div class="nombre-box">
+            <span class="nombre">${p.Producto || 'N/A'}</span>
+            <span class="codigo-txt">${p.Codigo || ''}</span>
+          </div>
           <span class="precio">$${p.Precio || '0.00'}</span>
         </div>`
       ).join('');
     }
 
-    // --- NUEVO FLUJO DE CANTIDAD ---
-
+    // --- FLUJO DE CANTIDAD ---
     function limpiarPrecio(precioStr) {
-      // Quita signos de peso o comas para poder multiplicar
       if (!precioStr) return 0;
       return parseFloat(precioStr.replace(/[^0-9.-]+/g,"")) || 0;
     }
 
+    // Se llama desde la lista (click en texto)
     function abrirCantidad(index) {
-      productoSeleccionado = resultadosActuales[index];
+      abrirCantidadDirecto(resultadosActuales[index]);
+    }
+
+    // Se llama desde el escáner o desde abrirCantidad
+    function abrirCantidadDirecto(producto) {
+      productoSeleccionado = producto;
       
-      // Cambio de pantalla
+      // PAUSAR CÁMARA para ahorrar recursos mientras se cobra
+      if (scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.SCANNING) {
+        html5QrCode.pause();
+      }
+
       document.getElementById('pantalla-busqueda').style.display = 'none';
       document.getElementById('pantalla-cantidad').style.display = 'block';
 
-      // Llenar datos
       document.getElementById('selNombre').innerText = productoSeleccionado.Producto || 'N/A';
       document.getElementById('selPrecio').innerText = `$${productoSeleccionado.Precio || '0.00'} x unidad`;
 
-      // Resetear input de cantidad a 1 y auto-enfocar
       const inputCant = document.getElementById('inputCantidad');
       inputCant.value = '1';
-      
       calcularTotal();
 
-      // Forzar enfoque y selección (el usuario no tiene que borrar el '1', si teclea algo lo sobrescribe)
-      inputCant.focus();
-      inputCant.select();
+      setTimeout(() => {
+        inputCant.focus();
+        inputCant.select();
+      }, 50); // Ligero delay para que iOS procese bien el auto-focus
     }
 
     function calcularTotal() {
       if (!productoSeleccionado) return;
       const cant = parseFloat(document.getElementById('inputCantidad').value) || 0;
       const precioNum = limpiarPrecio(productoSeleccionado.Precio);
-      const total = cant * precioNum;
-      
-      document.getElementById('selTotal').innerText = `$${total.toFixed(2)}`;
+      document.getElementById('selTotal').innerText = `$${(cant * precioNum).toFixed(2)}`;
     }
 
     function volverBusqueda() {
-      // Regresa a la vista original de forma rápida
       document.getElementById('pantalla-cantidad').style.display = 'none';
       document.getElementById('pantalla-busqueda').style.display = 'block';
       
       const searchInput = document.getElementById('busqueda');
-      searchInput.value = ''; // Limpiamos la búsqueda anterior para estar listos para el sig. producto
-      mostrar([]); // Limpia la lista visual
+      searchInput.value = ''; 
+      mostrar([]); 
       
-      // Reenfocamos la barra de búsqueda general
-      searchInput.focus();
+      // REANUDAR CÁMARA
+      if (scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.PAUSED) {
+        html5QrCode.resume();
+      }
     }
 
     function confirmar(event) {
-      event.preventDefault(); // Evita que la página se recargue por el <form>
-      
-      // AQUI IRÍA LA LÓGICA PARA AGREGAR EL PRODUCTO AL CARRITO O TICKET
-      // const cantidadFinal = parseFloat(document.getElementById('inputCantidad').value);
-      // ticket.push({ producto: productoSeleccionado, cantidad: cantidadFinal });
-      
-      // Regresamos al flujo principal instantáneamente
+      event.preventDefault(); 
+      // Lógica de carrito iría aquí
       volverBusqueda();
     }
 
-    // --- FIN NUEVO FLUJO ---
-
+    // --- VOZ ---
     function startVoice() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      if (!SpeechRecognition) {
-        alert("Tu navegador no soporta dictado por voz.");
-        return;
-      }
+      if (!SpeechRecognition) { alert("Tu navegador no soporta voz."); return; }
       const recognition = new SpeechRecognition();
       recognition.lang = 'es-MX';
       recognition.interimResults = false;
@@ -221,7 +267,6 @@
       
       recognition.onerror = () => btn.style.background = '#e11d48';
       recognition.onend = () => btn.style.background = '#e11d48';
-      
       recognition.start();
     }
   </script>
