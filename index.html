@@ -14,9 +14,23 @@
     #pantalla-busqueda { display: block; }
     
     /* ZONA DEL ESCÁNER */
-    #reader-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 10px; background: #000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    #reader { width: 100%; border: none; }
-    #reader video { object-fit: cover; }
+    #reader-container { 
+      width: 100%; 
+      max-height: 180px; /* Reducido a la mitad del estándar */
+      border-radius: 12px; 
+      overflow: hidden; 
+      margin-bottom: 10px; 
+      background: #000; 
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      position: relative;
+    }    
+    #reader { 
+      width: 100%; 
+      border: none !important; 
+    }    
+    #reader video { 
+      object-fit: cover; 
+    }
 
     .search-container { display: flex; gap: 10px; margin-bottom: 10px; }
     #busqueda { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 8px; }
@@ -129,15 +143,23 @@
     function iniciarEscaner() {
       html5QrCode = new Html5Qrcode("reader");
       const config = { 
-        fps: 10, 
-        qrbox: { width: 250, height: 100 }, 
-        aspectRatio: 1.777778 // Formato horizontal estándar
+        fps: 15, // Un poco más de frames para mayor velocidad
+        qrbox: { width: 300, height: 120 }, // Zona de lectura estirada para códigos de barras
+        aspectRatio: 2.5, // Proporción más ancha (franja) en lugar de cuadrada
+        showTorchButtonIfSupported: true // Útil en bodegas oscuras
       };
       
-      // Intentar usar siempre la cámara trasera (environment)
-      html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess)
-        .then(() => { scannerActivo = true; })
-        .catch(err => console.error("Error iniciando cámara:", err));
+      html5QrCode.start(
+        { facingMode: "environment" }, 
+        config, 
+        onScanSuccess
+      ).then(() => { 
+        scannerActivo = true; 
+      }).catch(err => {
+        console.error("No se pudo iniciar el escáner:", err);
+        // Si falla por permisos, ocultamos el contenedor para no estorbar
+        document.getElementById('reader-container').style.display = 'none';
+      });
     }
 
     // Lo que sucede cuando la cámara detecta un código
