@@ -50,11 +50,17 @@ fetch('data/productos.csv')
 // ==========================================
 function iniciarEscaner() {
   html5QrCode = new Html5Qrcode("reader");
+  
   const config = { 
-    fps: 15, 
-    qrbox: { width: 300, height: 120 }, 
-    aspectRatio: 2.5, 
-    showTorchButtonIfSupported: true 
+    fps: 10,
+    // Caja dinámicamente para que NUNCA rompa la interfaz
+    qrbox: function(viewfinderWidth, viewfinderHeight) {
+        return {
+            width: viewfinderWidth * 0.75, 
+            height: 90
+        };
+    },
+    aspectRatio: 2.0 
   };
   
   html5QrCode.start(
