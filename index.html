@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador Rápido POS</title>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; padding: 10px; margin: 0; background: #f4f4f5; }
+    .search-container { display: flex; gap: 10px; margin-bottom: 15px; }
+    input { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 6px; }
+    input:focus { border-color: #0056b3; outline: none; }
+    #micBtn { background: #e11d48; color: white; border: none; padding: 0 20px; font-size: 1.2em; border-radius: 6px; cursor: pointer; }
+    .producto { background: white; border-bottom: 1px solid #eee; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; margin-bottom: 5px; }
+    .nombre { font-size: 1.1em; font-weight: bold; color: #333; }
+    .precio { font-size: 1.3em; font-weight: 900; color: #16a34a; }
+  </style>
+</head>
+<body>
+  <div class="search-container">
+    <button id="micBtn" onclick="startVoice()">🎤</button>
+    <input type="text" id="busqueda" placeholder="Buscar producto..." oninput="filtrar()" autofocus autocomplete="off">
+  </div>
+
+  <div id="resultados"></div>
+
+  <script>
+    let productos = [];
+    let fuse;
+
+    // Solo quitamos acentos para que "jamon" y "jamón" empaten perfecto. Fuse ya maneja minúsculas.
+    function quitarAcentos(texto) {
+      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    // Cargar el CSV real
+    fetch('productos.csv')
+      .then(res => res.text())
+      .then(csv => {
+        const lineas = csv.split('\n');
+        const cabeceras = lineas[0].split(',').map(h => h.trim());
+        
+        productos = lineas.slice(1).filter(l => l.trim() !== '').map(l => {
+          const vals = l.split(',');
+          let obj = {};
+          // Mapeo dinámico según tus cabeceras
+          cabeceras.forEach((h, i) => obj[h] = vals[i] ? vals[i].trim() : '');
+          
+          // Llave limpia oculta para que busque más rápido
+          obj.SearchKey = quitarAcentos(obj.Producto || '');
+          return obj;
+        });
+
+        // Configuración de Fuse.js
+        fuse = new Fuse(productos, {
+          keys: ['SearchKey'],
+          threshold: 0.45, // ¡Umbral subido a 0.45! Esto perdona burradas y abreviaciones cortas.
+          ignoreLocation: true,
+          useExtendedSearch: true
+        });
+      })
+      .catch(err => console.error("Error cargando productos.csv:", err));
+
+    function filtrar() {
+      const inputVal = document.getElementById('busqueda').value;
+      if (inputVal.trim() === '' || !fuse) {
+        mostrar([]);
+        return;
+      }
+
+      const textoBuscado = quitarAcentos(inputVal);
+      // Top 5 directo a la vena
+      const resultado = fuse.search(textoBuscado).map(r => r.item).slice(0, 5);
+      mostrar(resultado);
+    }
+
+    function mostrar(lista) {
+      const div = document.getElementById('resultados');
+      if (lista.length === 0) {
+        div.innerHTML = '<div class="producto" style="color:#666;">Sin resultados</div>';
+        return;
+      }
+      
+      div.innerHTML = lista.map(p =>
+        `<div class="producto">
+          <span class="nombre">${p.Producto || 'N/A'}</span>
+          <span class="precio">$${p.Precio || '0.00'}</span>
+        </div>`
+      ).join('');
+    }
+
+    // Dictado por voz
+    function startVoice() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) {
+        alert("Tu navegador no soporta dictado por voz.");
+        return;
+      }
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'es-MX';
+      recognition.interimResults = false;
+      
+      const btn = document.getElementById('micBtn');
+      btn.style.background = '#16a34a';
+      
+      recognition.onresult = event => {
+        document.getElementById('busqueda').value = event.results[0][0].transcript;
+        btn.style.background = '#e11d48';
+        filtrar();
+      };
+      
+      recognition.onerror = () => btn.style.background = '#e11d48';
+      recognition.onend = () => btn.style.background = '#e11d48';
+      
+      recognition.start();
+    }
+  </script>
+</body>
+</html>
