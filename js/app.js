@@ -1,5 +1,5 @@
 // ==========================================
-// 1. VARIABLES GLOBALES Y ESTADO DE LA APP
+// 1. VARIABLES GLOBALES Y ESTADO
 // ==========================================
 let productos = [];
 let resultadosActuales = [];
@@ -19,23 +19,22 @@ function quitarAcentos(texto) {
 // ==========================================
 // 2. CARGA DE DATOS (CSV)
 // ==========================================
-// Atención: La ruta ahora apunta a la carpeta data/
 fetch('data/productos.csv')
   .then(res => res.text())
   .then(csv => {
     const lineas = csv.split('\n');
-    const cabeceras = lineas[0].split(',').map(h => h.trim());
+    const cabeceras = lineas[0].split(',').map(h => h.trim()); // codigo_de_barra, producto, precio, revisar
     
     productos = lineas.slice(1).filter(l => l.trim() !== '').map(l => {
       const vals = l.split(',');
       let obj = {};
       cabeceras.forEach((h, i) => obj[h] = vals[i] ? vals[i].trim() : '');
-      obj.SearchKey = quitarAcentos(obj.Producto || '');
+      obj.SearchKey = quitarAcentos(obj.producto || '');
       return obj;
     });
 
     fuse = new Fuse(productos, {
-      keys: ['SearchKey', 'Codigo'],
+      keys: ['SearchKey', 'codigo_de_barra'],
       threshold: 0.3, 
       distance: 100,
       useExtendedSearch: true
@@ -54,9 +53,7 @@ function iniciarEscaner() {
   
   const config = { 
     fps: 10,
-    // Tamaño fijo de 250x100. Cabe perfecto en la pantalla del móvil sin reventar el cálculo interno.
     qrbox: { width: 250, height: 100 }, 
-    // Optimizador: Le decimos que NO busque QR ni formatos raros, SOLO códigos de barras (EAN_13 es el de 13 dígitos de México)
     formatsToSupport: [ 
       Html5QrcodeSupportedFormats.EAN_13, 
       Html5QrcodeSupportedFormats.EAN_8,
@@ -64,7 +61,6 @@ function iniciarEscaner() {
     ]
   };
   
-  // No usamos aspectRatio. Dejamos que la cámara use su formato nativo.
   html5QrCode.start(
     { facingMode: "environment" }, 
     config, 
@@ -78,7 +74,7 @@ function iniciarEscaner() {
 }
 
 function onScanSuccess(decodedText) {
-  const productoEncontrado = productos.find(p => p.Codigo === decodedText);
+  const productoEncontrado = productos.find(p => p.codigo_de_barra === decodedText);
   
   if (productoEncontrado) {
     if (navigator.vibrate) navigator.vibrate(100); 
@@ -93,7 +89,7 @@ function toggleScanner(forzarOcultar = false) {
   // Si está visible y queremos ocultarlo (ya sea por el botón o forzado por teclear)
   if (escanerVisible && (forzarOcultar || !forzarOcultar)) {
     container.style.display = 'none';
-    btn.style.opacity = '0.5'; // Efecto visual de apagado
+    btn.style.opacity = '0.5'; 
     escanerVisible = false;
     
     // Pausamos la cámara si está escaneando
@@ -104,7 +100,7 @@ function toggleScanner(forzarOcultar = false) {
   // Si está oculto y el usuario apretó el botón para mostrarlo
   else if (!forzarOcultar && !escanerVisible) {
     container.style.display = 'block';
-    btn.style.opacity = '1'; // Efecto visual de encendido
+    btn.style.opacity = '1'; 
     escanerVisible = true;
     
     // Reanudamos la cámara si estaba pausada
@@ -119,7 +115,8 @@ function toggleScanner(forzarOcultar = false) {
 // ==========================================
 function filtrar() {
   const inputVal = document.getElementById('busqueda').value;
-
+  
+  // Auto-ocultar escáner al escribir
   if (inputVal.trim() !== '' && escanerVisible) {
     toggleScanner(true); 
   }
@@ -144,10 +141,10 @@ function mostrar(lista) {
   div.innerHTML = lista.map((p, index) =>
     `<div class="producto" onclick="abrirCantidad(${index})">
       <div class="nombre-box">
-        <span class="nombre">${p.Producto || 'N/A'}</span>
-        <span class="codigo-txt">${p.Codigo || ''}</span>
+        <span class="nombre">${p.producto || 'N/A'}</span>
+        <span class="codigo-txt">${p.codigo_de_barra || ''}</span>
       </div>
-      <span class="precio">$${p.Precio || '0.00'}</span>
+      <span class="precio">$${p.precio || '0.00'}</span>
     </div>`
   ).join('');
 }
@@ -196,8 +193,8 @@ function abrirCantidadDirecto(producto) {
   document.getElementById('pantalla-busqueda').style.display = 'none';
   document.getElementById('pantalla-cantidad').style.display = 'block';
 
-  document.getElementById('selNombre').innerText = productoSeleccionado.Producto || 'N/A';
-  document.getElementById('selPrecio').innerText = `$${productoSeleccionado.Precio || '0.00'} x unidad`;
+  document.getElementById('selNombre').innerText = productoSeleccionado.producto || 'N/A';
+  document.getElementById('selPrecio').innerText = `$${productoSeleccionado.precio || '0.00'} x unidad`;
 
   const inputCant = document.getElementById('inputCantidad');
   inputCant.value = '1';
@@ -212,7 +209,7 @@ function abrirCantidadDirecto(producto) {
 function calcularTotal() {
   if (!productoSeleccionado) return;
   const cant = parseFloat(document.getElementById('inputCantidad').value) || 0;
-  const precioNum = limpiarPrecio(productoSeleccionado.Precio);
+  const precioNum = limpiarPrecio(productoSeleccionado.precio);
   document.getElementById('selTotal').innerText = `$${(cant * precioNum).toFixed(2)}`;
 }
 
@@ -224,11 +221,17 @@ function volverBusqueda() {
   searchInput.value = ''; 
   mostrar([]); 
   
-  if (scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.PAUSED) {
+  // Ojo: Usamos escanerVisible en lugar de scannerActivo para decidir si reanudar o no
+  if (escanerVisible && scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.PAUSED) {
     html5QrCode.resume();
   }
 }
 
+function confirmar(event) {
+  event.preventDefault(); 
+  // Carrito iría aquí
+  volverBusqueda();
+}
 
 // ==========================================
 // 6. FLUJO DEL CARRITO (Próximamente)
