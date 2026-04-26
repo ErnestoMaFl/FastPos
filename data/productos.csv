@@ -1,33 +1,110 @@
-Codigo,Producto,Precio
-7501000000001,Coca Cola Original 2.5L Retornable,38.00
-7501000000002,Coca Cola Original 600ml,20.00
-7501000000003,Huevos Blancos San Juan 18 pzas,65.00
-7501000000004,Pan Blanco Bimbo Grande,52.00
-7501000000005,Leche Lala Entera 1L,28.00
-7501000000006,Aceite Mixto 123 1L,42.00
-7501000000007,Azucar Estandar 1Kg,35.00
-7501000000008,Frijoles Refritos Isadora Peruanos 430g,22.00
-7501000000009,Atun Dolores en Agua 140g,23.00
-7501000000010,Papel Higienico Petalo Rendimax 4 Rollos,35.00
-7501000000011,Jabon de Lavanderia Zote Rosa 400g,25.00
-7501000000012,Cafe Soluble Nescafe Clasico 120g,85.00
-7501000000013,Arroz Super Extra Verde Valle 1Kg,42.00
-7501000000014,Pasta Fideo La Moderna 200g,11.00
-7501000000015,Sal de Mesa La Fina 1Kg,20.00
-7501000000016,Mayonesa McCormick con Limon 390g,48.00
-7501000000017,Sabritas Sal Original 170g,45.00
-7501000000018,Maruchan Sabor Camaron con Limon y Habanero,18.00
-7501000000019,Galletas Marias Gamesa 170g,19.00
-7501000000020,Pastelito Gansito Marinela 50g,18.00
-7501000000021,Pure de Tomate Del Fuerte 210g,10.00
-7501000000022,Chiles Jalapenos La Costena Lata 340g,24.00
-7501000000023,Jamon Virginia de Pavo FUD 250g,45.00
-7501000000024,Queso Panela FUD 200g,48.00
-7501000000025,Cerveza Victoria Laton 473ml,28.00
-7501000000026,Cerveza Corona Extra Lata 355ml,22.00
-7501000000027,Tortillinas Tia Rosa 12 pzas,28.00
-7501000000028,Consome Knorr Suiza 8 Cubos,18.00
-7501000000029,Cereal Zucaritas Kelloggs 300g,55.00
-7501000000030,Formula Lactea Nutrileche 1L,22.00
-7501000393022,Galletas Principe, 15.00
-7503001670355,Paleta Bolonia Triple Chocolate, 30.00
+codigo_de_barra,producto,precio,revisar
+7501011167650,Sabritas Original 105 gramos,45,0
+7501011167674,Ruffles Queso 120 gramos,45,0
+7501011131064,Doritos Nacho 146 gramos,45,0
+7500478043927,Sabritas Original 45 gramos,23,0
+7500478043958,Sabritas Limón 42 gramos,23,0
+7500478043965,Sabritas Crema y Especias 42 gramos,23,0
+,Ruffles Original,23,0
+,Ruffles Queso,23,0
+,Doritos Nacho,23,0
+,Doritos Dinamita,23,0
+,Tostitos Salsa Verde,23,0
+,Cheetos Torciditos,18,0
+,Cheetos Poffs,18,0
+,Cheetos Bolitas,18,0
+,Fritos,19,0
+,Sabritas Adobadas,23,0
+,Sabritas Habanero,23,0
+,Sabritas Flaming Hot,23,0
+,Ruffles Mega Crunch Salsa Roja,23,0
+,Ruffles Mega Crunch Salsa Verde,23,0
+,Sabritas Receta Crujiente Sal,23,0
+,Sabritas Receta Crujiente Jalapeño,23,0
+,Sabritas Receta Crujiente Flaming Hot,23,0
+,Sabritas Chicharrón,23,0
+,Doritos Diablo,23,0
+,Doritos Incógnita,23,0
+,Doritos Dinamita Flaming Hot,23,0
+,Doritos 3D,23,0
+,Rancheritos,19,0
+,Fritos Sal,19,0
+,Tostitos Flaming Hot,23,0
+,Crujitos,19,0
+,Fritos Chile y Limón,19,0
+,Fritos Chorizo,19,0
+,Cheetos Jalapeño,18,0
+,Churrumais,18,0
+,Churrumais Flaming Hot,18,0
+,Yoplait Placer Pay de Fresa,17,0
+,Café olé Variedad,38,0
+,Yoplait 330 gramos beber variedad,20,0
+,Huevo kinder,27,0
+,Yoplait Disfruta beber variedad,22,0
+,Yoplait Disfruta choco beber,25,0
+,Yoplait natural con granola 450 gramos,30,0
+,Yoplait Disfruta Durazno 442 gramos,30,0
+,Yoplait Licuado beber 330 gramos Variedad,20,0
+,Yoplait Griego sin azucar beber Variedad,20,0
+,Yoplait Griego beber Variedad,18,0
+,Yoplait doble cero beber variedad,17,0
+,Yoplait Griego 120 gramos Variedad,14,0
+,Yoplait 120 gramos Variedad,7.50,0
+,Yoplait 442 gramos Variedad,29,0
+,Jamón Fud pechuga de pavo Virginia 250 gramos,118,0
+,Jamón Fud de pavo y cerdo Virginia 290 gramos,80,0
+,Jamón Fud de pavo Virginia 290 gramos,70,0
+,Salchichas Fud con pavo 266 gramos,28,0
+,Salchichas Fud tipo vienna 266 gramos,32,0
+,Coca-Cola Taparrosca,22,0
+,Coca-Cola 1.25 litros PET,30,0
+,Coca-Cola 2.0 litros PET,42,0
+,Coca-Cola 2.5 litros PET,52,0
+,Coca-Cola 3.0 litros PET,60,0
+,Coca-Cola 250 mililitros PET,12,0
+,Coca-Cola 235 mililitros Vidrio,19,0
+,Coca-Cola 450 mililitros PET,20,0
+,Coca-Cola Lata 235 mililitros,19,0
+,Coca-Cola Lata 355 mililitros,24,0
+,Coca-Cola Lata 473 mililitros,26,0
+,Coca-Cola Sabores 600 mililitros,20,0
+,Coca-Cola Sabores 2 litros,32,0
+,Coca-Cola Sabores 2.5 litros,37,0
+,Coca-Cola Light 1 litro PET,30,0
+,Coca-Cola 500 mililitros Retornable Vidrio,16,0
+,Coca-Cola 1 litro Retornable Vidrio,23,0
+,Coca-Cola 1.5 litros Retornable,30,0
+,Coca-Cola 2.5 litros Retornable,40,0
+,Monster 473 mililitros,45,0
+,Predator 473 mililitros,21,0
+,Jack Daniels,35,0
+,Flashlyte,25,0
+,Powerade 600 mililitros,27,0
+,Powerade 1 litro,36,0
+,Topochico 600 mililitros,23,0
+,Topochico 1.5 litros,29,0
+,Topochico Paloma Lata,28,0
+,Valle Frut 1 litro,25,0
+,Valle Frut 2 litros,36,0
+,Fuze te 600 mililitros,24,0
+,Fuze te 1 litro,30,0
+,Del Valle Generosa Vidrio 413 mililitros,20,0
+,Del Valle Cartón 250 mililitros,14,0
+,Del Valle 1 litro PET,33,0
+,Del Valle Arándano 1 litro,35,0
+,Ciel 600 mililitros,14,0
+,Ciel 1 litro,17,0
+,Ciel 1.5 litros,20,0
+,Ciel Bidón 5 litros,39,0
+,Ciel sabor 1 litro,19,0
+,Clamato 473 mililitros,30,0
+,Arizona 570 mililitros,24,0
+,Jugo Jumex Cartón 237 mililitros,14,0
+,Jugo Jumex Latón 460 mililitros,30,0
+,Amper,22,0
+,Tonicol 600 mililitros,27,0
+,Jugo Jumex Cartón 475 mililitros,24,0
+,Electrolit Sabores 625 mililitros,25,0
+,Electrolit Sabores 1 litro,35,0
+,Jugo Jumex Cartón 960 mililitros,32,0
+,Coca-Cola Sabores 1.5 litros,28,0
