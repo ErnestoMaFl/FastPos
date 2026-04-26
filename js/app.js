@@ -7,6 +7,7 @@ let productoSeleccionado = null;
 let fuse;
 let html5QrCode;
 let scannerActivo = false;
+let escanerVisible = true;
 
 // Preparación para la siguiente fase: El Carrito
 let ticketActual = []; 
@@ -85,11 +86,44 @@ function onScanSuccess(decodedText) {
   }
 }
 
+function toggleScanner(forzarOcultar = false) {
+  const container = document.getElementById('reader-container');
+  const btn = document.getElementById('toggleScannerBtn');
+
+  // Si está visible y queremos ocultarlo (ya sea por el botón o forzado por teclear)
+  if (escanerVisible && (forzarOcultar || !forzarOcultar)) {
+    container.style.display = 'none';
+    btn.style.opacity = '0.5'; // Efecto visual de apagado
+    escanerVisible = false;
+    
+    // Pausamos la cámara si está escaneando
+    if (scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.SCANNING) {
+      html5QrCode.pause();
+    }
+  } 
+  // Si está oculto y el usuario apretó el botón para mostrarlo
+  else if (!forzarOcultar && !escanerVisible) {
+    container.style.display = 'block';
+    btn.style.opacity = '1'; // Efecto visual de encendido
+    escanerVisible = true;
+    
+    // Reanudamos la cámara si estaba pausada
+    if (scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.PAUSED) {
+      html5QrCode.resume();
+    }
+  }
+}
+
 // ==========================================
 // 4. BÚSQUEDA (TEXTO Y VOZ)
 // ==========================================
 function filtrar() {
   const inputVal = document.getElementById('busqueda').value;
+
+  if (inputVal.trim() !== '' && escanerVisible) {
+    toggleScanner(true); 
+  }
+
   if (inputVal.trim() === '' || !fuse) {
     mostrar([]);
     return;

@@ -20,10 +20,23 @@ body { font-family: system-ui, -apple-system, sans-serif; padding: 10px; margin:
   object-fit: cover; 
 }
 
-.search-container { display: flex; gap: 10px; margin-bottom: 10px; }
-#busqueda { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 8px; }
+.search-container { display: flex; gap: 8px; margin-bottom: 10px; }
+#busqueda { flex: 1; padding: 15px; font-size: 1.2em; border: 2px solid #ccc; border-radius: 8px; min-width: 0; }
 #busqueda:focus { border-color: #0056b3; outline: none; }
-#micBtn { background: #e11d48; color: white; border: none; padding: 0 20px; font-size: 1.4em; border-radius: 8px; cursor: pointer; }
+
+#micBtn, #toggleScannerBtn { 
+  color: white; 
+  border: none; 
+  padding: 0 15px; 
+  font-size: 1.4em; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#micBtn { background: #e11d48; }
+#toggleScannerBtn { background: #475569; transition: opacity 0.2s; }
 
 .producto { background: white; border-bottom: 1px solid #eee; padding: 18px 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); cursor: pointer; }
 .producto:active { background: #e2e8f0; }
