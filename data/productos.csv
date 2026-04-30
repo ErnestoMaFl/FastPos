@@ -5,32 +5,32 @@ codigo_de_barra,producto,precio,revisar
 7500478043927,Sabritas Original 45 gramos,23,0
 7500478043958,Sabritas Limón 42 gramos,23,0
 7500478043965,Sabritas Crema y Especias 42 gramos,23,0
-,Ruffles Original,23,0
-,Ruffles Queso,23,0
-,Doritos Nacho,23,0
-,Doritos Dinamita,23,0
-,Tostitos Salsa Verde,23,0
-,Cheetos Torciditos,18,0
-,Cheetos Poffs,18,0
-,Cheetos Bolitas,18,0
-,Fritos,19,0
-,Sabritas Adobadas,23,0
-,Sabritas Habanero,23,0
-,Sabritas Flaming Hot,23,0
-,Ruffles Mega Crunch Salsa Roja,23,0
-,Ruffles Mega Crunch Salsa Verde,23,0
-,Sabritas Receta Crujiente Sal,23,0
-,Sabritas Receta Crujiente Jalapeño,23,0
-,Sabritas Receta Crujiente Flaming Hot,23,0
-,Sabritas Chicharrón,23,0
-,Doritos Diablo,23,0
-,Doritos Incógnita,23,0
-,Doritos Dinamita Flaming Hot,23,0
+7500478044368,Ruffles Original 48 gramos,23,0
+7500478044221,Ruffles Queso 48 gramos,23,0
+7501011123588,Doritos Nacho 58 gramos,23,0
+7500478018512,Doritos Dinamita Chile y Limón 70 gramos,23,0
+7501011127012,Tostitos Salsa Verde 62 gramos,20,0
+7501011143586,Cheetos Torciditos 55 gramos,18,0
+7500478044115,Cheetos Poffs 40 gramos,18,0
+7500478044214,Cheetos Bolitas 43 gramos,18,0
+,Fritos,19,1
+7500478044092,Sabritas Adobadas 45 gramos,23,0
+7500478043972,Sabritas Habanero 42 gramos,23,0
+,Sabritas Flaming Hot,23,1
+7500478046706,Ruffles Mega Crunch Salsa Roja 50 gramos,23,0
+7500478046720,Ruffles Mega Crunch Jalapeño 50 gramos,23,0
+7500478038657,Sabritas Receta Crujiente Sal 57 gramos,23,0
+7500478038671,Sabritas Receta Crujiente Jalapeño 57 gramos,23,0
+7500478045938,Sabritas Receta Crujiente Flaming Hot 57 gramos,23,0
+7501011151079,Sabritas Chicharrón de Cerdo 30 gramos,23,0
+7501011123595,Doritos Diablo 58 gramos,23,0
+7501011123878,Doritos Incógnita 58 gramos,23,0
+7500478026036,Doritos Dinamita Flaming Hot 70 gramos,23,0
+7501011111028,Rancheritos 58 gramos,19,0
+7501011142299,Crujitos 42 gramos,19,0
 ,Doritos 3D,23,0
-,Rancheritos,19,0
 ,Fritos Sal,19,0
 ,Tostitos Flaming Hot,23,0
-,Crujitos,19,0
 ,Fritos Chile y Limón,19,0
 ,Fritos Chorizo,19,0
 ,Cheetos Jalapeño,18,0
@@ -92,11 +92,11 @@ codigo_de_barra,producto,precio,revisar
 ,Del Valle Cartón 250 mililitros,14,0
 ,Del Valle 1 litro PET,33,0
 ,Del Valle Arándano 1 litro,35,0
-,Ciel 600 mililitros,14,0
-,Ciel 1 litro,17,0
-,Ciel 1.5 litros,20,0
-,Ciel Bidón 5 litros,39,0
-,Ciel sabor 1 litro,19,0
+,Agua Ciel 600 mililitros,14,0
+,Agua Ciel 1 litro,17,0
+,Agua Ciel 1.5 litros,20,0
+,Agua Ciel Bidón 5 litros,39,0
+,Agua Ciel sabor 1 litro,19,0
 ,Clamato 473 mililitros,30,0
 ,Arizona 570 mililitros,24,0
 ,Jugo Jumex Cartón 237 mililitros,14,0
