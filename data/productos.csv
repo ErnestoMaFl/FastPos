@@ -1,110 +1,139 @@
-codigo_de_barra,producto,precio,revisar
-7501011167650,Sabritas Original 105 gramos,45,0
-7501011167674,Ruffles Queso 120 gramos,45,0
-7501011131064,Doritos Nacho 146 gramos,45,0
-7500478043927,Sabritas Original 45 gramos,23,0
-7500478043958,Sabritas Limón 42 gramos,23,0
-7500478043965,Sabritas Crema y Especias 42 gramos,23,0
-7500478044368,Ruffles Original 48 gramos,23,0
-7500478044221,Ruffles Queso 48 gramos,23,0
-7501011123588,Doritos Nacho 58 gramos,23,0
-7500478018512,Doritos Dinamita Chile y Limón 70 gramos,23,0
-7501011127012,Tostitos Salsa Verde 62 gramos,20,0
-7501011143586,Cheetos Torciditos 55 gramos,18,0
-7500478044115,Cheetos Poffs 40 gramos,18,0
-7500478044214,Cheetos Bolitas 43 gramos,18,0
-,Fritos,19,1
-7500478044092,Sabritas Adobadas 45 gramos,23,0
-7500478043972,Sabritas Habanero 42 gramos,23,0
-,Sabritas Flaming Hot,23,1
-7500478046706,Ruffles Mega Crunch Salsa Roja 50 gramos,23,0
-7500478046720,Ruffles Mega Crunch Jalapeño 50 gramos,23,0
-7500478038657,Sabritas Receta Crujiente Sal 57 gramos,23,0
-7500478038671,Sabritas Receta Crujiente Jalapeño 57 gramos,23,0
-7500478045938,Sabritas Receta Crujiente Flaming Hot 57 gramos,23,0
-7501011151079,Sabritas Chicharrón de Cerdo 30 gramos,23,0
-7501011123595,Doritos Diablo 58 gramos,23,0
-7501011123878,Doritos Incógnita 58 gramos,23,0
-7500478026036,Doritos Dinamita Flaming Hot 70 gramos,23,0
-7501011111028,Rancheritos 58 gramos,19,0
-7501011142299,Crujitos 42 gramos,19,0
-,Doritos 3D,23,0
-,Fritos Sal,19,0
-,Tostitos Flaming Hot,23,0
-,Fritos Chile y Limón,19,0
-,Fritos Chorizo,19,0
-,Cheetos Jalapeño,18,0
-,Churrumais,18,0
-,Churrumais Flaming Hot,18,0
-,Yoplait Placer Pay de Fresa,17,0
-,Café olé Variedad,38,0
-,Yoplait 330 gramos beber variedad,20,0
-,Huevo kinder,27,0
-,Yoplait Disfruta beber variedad,22,0
-,Yoplait Disfruta choco beber,25,0
-,Yoplait natural con granola 450 gramos,30,0
-,Yoplait Disfruta Durazno 442 gramos,30,0
-,Yoplait Licuado beber 330 gramos Variedad,20,0
-,Yoplait Griego sin azucar beber Variedad,20,0
-,Yoplait Griego beber Variedad,18,0
-,Yoplait doble cero beber variedad,17,0
-,Yoplait Griego 120 gramos Variedad,14,0
-,Yoplait 120 gramos Variedad,7.50,0
-,Yoplait 442 gramos Variedad,29,0
-,Jamón Fud pechuga de pavo Virginia 250 gramos,118,0
-,Jamón Fud de pavo y cerdo Virginia 290 gramos,80,0
-,Jamón Fud de pavo Virginia 290 gramos,70,0
-,Salchichas Fud con pavo 266 gramos,28,0
-,Salchichas Fud tipo vienna 266 gramos,32,0
-,Coca-Cola Taparrosca,22,0
-,Coca-Cola 1.25 litros PET,30,0
-,Coca-Cola 2.0 litros PET,42,0
-,Coca-Cola 2.5 litros PET,52,0
-,Coca-Cola 3.0 litros PET,60,0
-,Coca-Cola 250 mililitros PET,12,0
-,Coca-Cola 235 mililitros Vidrio,19,0
-,Coca-Cola 450 mililitros PET,20,0
-,Coca-Cola Lata 235 mililitros,19,0
-,Coca-Cola Lata 355 mililitros,24,0
-,Coca-Cola Lata 473 mililitros,26,0
-,Coca-Cola Sabores 600 mililitros,20,0
-,Coca-Cola Sabores 2 litros,32,0
-,Coca-Cola Sabores 2.5 litros,37,0
-,Coca-Cola Light 1 litro PET,30,0
-,Coca-Cola 500 mililitros Retornable Vidrio,16,0
-,Coca-Cola 1 litro Retornable Vidrio,23,0
-,Coca-Cola 1.5 litros Retornable,30,0
-,Coca-Cola 2.5 litros Retornable,40,0
-,Monster 473 mililitros,45,0
-,Predator 473 mililitros,21,0
-,Jack Daniels,35,0
-,Flashlyte,25,0
-,Powerade 600 mililitros,27,0
-,Powerade 1 litro,36,0
-,Topochico 600 mililitros,23,0
-,Topochico 1.5 litros,29,0
-,Topochico Paloma Lata,28,0
-,Valle Frut 1 litro,25,0
-,Valle Frut 2 litros,36,0
-,Fuze te 600 mililitros,24,0
-,Fuze te 1 litro,30,0
-,Del Valle Generosa Vidrio 413 mililitros,20,0
-,Del Valle Cartón 250 mililitros,14,0
-,Del Valle 1 litro PET,33,0
-,Del Valle Arándano 1 litro,35,0
-,Agua Ciel 600 mililitros,14,0
-,Agua Ciel 1 litro,17,0
-,Agua Ciel 1.5 litros,20,0
-,Agua Ciel Bidón 5 litros,39,0
-,Agua Ciel sabor 1 litro,19,0
-,Clamato 473 mililitros,30,0
-,Arizona 570 mililitros,24,0
-,Jugo Jumex Cartón 237 mililitros,14,0
-,Jugo Jumex Latón 460 mililitros,30,0
-,Amper,22,0
-,Tonicol 600 mililitros,27,0
-,Jugo Jumex Cartón 475 mililitros,24,0
-,Electrolit Sabores 625 mililitros,25,0
-,Electrolit Sabores 1 litro,35,0
-,Jugo Jumex Cartón 960 mililitros,32,0
-,Coca-Cola Sabores 1.5 litros,28,0
+codigo_de_barra,producto,precio,revisar,relacion
+7501011167650,Sabritas Original 105 gramos,45,0,
+7501011167674,Ruffles Queso 120 gramos,45,0,
+7501011131064,Doritos Nacho 146 gramos,45,0,
+7500478043927,Sabritas Original 45 gramos,23,0,
+7500478043958,Sabritas Limón 42 gramos,23,0,
+7500478043965,Sabritas Crema y Especias 42 gramos,23,0,
+7500478044368,Ruffles Original 48 gramos,23,0,
+7500478044221,Ruffles Queso 48 gramos,23,0,
+7501011123588,Doritos Nacho 58 gramos,23,0,
+7500478018512,Doritos Dinamita Chile y Limón 70 gramos,23,0,
+7501011127012,Tostitos Salsa Verde 62 gramos,20,0,
+7501011143586,Cheetos Torciditos 55 gramos,18,0,
+7500478044115,Cheetos Poffs 40 gramos,18,0,
+7500478044214,Cheetos Bolitas 43 gramos,18,0,
+,Fritos,19,1,
+7500478044092,Sabritas Adobadas 45 gramos,23,0,
+7500478043972,Sabritas Habanero 42 gramos,23,0,
+,Sabritas Flaming Hot,23,1,
+7500478046706,Ruffles Mega Crunch Salsa Roja 50 gramos,23,0,
+7500478046720,Ruffles Mega Crunch Jalapeño 50 gramos,23,0,
+7500478038657,Sabritas Receta Crujiente Sal 57 gramos,23,0,
+7500478038671,Sabritas Receta Crujiente Jalapeño 57 gramos,23,0,
+7500478045938,Sabritas Receta Crujiente Flaming Hot 57 gramos,23,0,
+7501011151079,Sabritas Chicharrón de Cerdo 30 gramos,23,0,
+7501011123595,Doritos Diablo 58 gramos,23,0,
+7501011123878,Doritos Incógnita 58 gramos,23,0,
+7500478026036,Doritos Dinamita Flaming Hot 70 gramos,23,0,
+7501011111028,Rancheritos 58 gramos,19,0,
+7501011142299,Crujitos 42 gramos,19,0,
+7501011163706,Doritos 3D 50 gramos,23,0,
+,Fritos Sal,19,0,
+7501011126879,Tostitos Flaming Hot 62 gramos,23,0,
+7501011116252,Fritos Chile y Limón 60 gramos,19,0,
+7501011112254,Fritos Chorizo y Chipotle 60 gramos,19,0,
+7500478046034,Cheetos Jalapeño 55 gramos,18,0,
+7500478016587,Churrumais 65 gramos,18,0,
+7500478042319,Churrumais Flamin' Hot 65 gramos,18,0,
+7501040092589,Yoplait Placer Pay de Fresa 145 gramos,17,0,
+,Café Olé Variedad,38,0,
+7503001453200,Café Olé Moka Cappuccino,38,0,Café Olé Variedad
+7501040070716,Café Olé Malteada Vainilla,38,0,Café Olé Variedad
+7501040070693,Café Olé Malteada Chocolate,38,0,Café Olé Variedad
+7503001453194,Café Olé Clásico Cappuccino,38,0,Café Olé Variedad
+80050117,Huevo Kinder Sorpresa,27,0,
+,Yoplait 330 gramos beber Variedad,22,0,
+7501040092619,Yoplait Durazno 330 gramos beber,22,0,Yoplait 330 gramos beber Variedad
+7501040091124,Yoplait Fresa 330 gramos beber,22,0,Yoplait 330 gramos beber Variedad
+7501040091117,Yoplait Piña Coco 330 gramos beber,22,0,Yoplait 330 gramos beber Variedad
+,Yoplait Licuado 330 gramos beber Variedad,22,0,
+7501040093838,Yoplait Licuado con nuez y granola 330 gramos beber,22,0,Yoplait Licuado 330 gramos beber Variedad
+7501040093197,Yoplait Licuado con fresa y granola 330 gramos beber,22,0,Yoplait Licuado 330 gramos beber Variedad
+,Yoplait Disfruta beber Variedad,22,0,
+7501040094422,Yoplait Disfruta Fresa,22,0,Yoplait Disfruta beber variedad
+7501040094446,Yoplait Disfruta Blueberry,22,0,Yoplait Disfruta beber variedad
+,Yoplait Disfruta Licuado beber Variedad,22,0,
+7501040097287,Yoplait Disfruta Licuado Manzana Guayaba y Granola beber,22,0,Yoplait Disfruta Licuado beber Variedad
+,Yoplait Disfruta Choco beber Variedad,25,0,
+7501040076022,Yoplait Disfruta Chocogalletas con Plátano beber,25,0,Yoplait Disfruta Choco beber Variedad
+7501040076015,Yoplait Disfruta Chocogalletas Fresa y Avena beber,25,0,Yoplait Disfruta Choco beber Variedad
+7501040094118,Yoplait Natural con Granola 450 gramos,30,0,
+7501040092770,Yoplait Disfruta Durazno 442 gramos,30,0,
+,Yoplait Griego Sin Azúcar 220 gramos beber Variedad,20,0,
+7501040095290,Yoplait Griego Fresa Sin Azúcar 220 gramos beber,20,0,Yoplait Griego Sin Azúcar 220 gramos beber Variedad
+7501040095313,Yoplait Griego Mango Sin Azúcar 220 gramos beber,20,0,Yoplait Griego Sin Azúcar 220 gramos beber Variedad
+,Yoplait Griego 220 gramos beber Variedad,18,0,
+7501040092886,Yoplait Griego Fresa 220 gramos beber,18,0,Yoplait Griego 220 gramos beber Variedad
+7501040092879,Yoplait Griego Moras 220 gramos beber,18,0,Yoplait Griego 220 gramos beber Variedad
+,Yoplait doble cero 242 gramos beber Variedad,17,0,
+7501040091254,Yoplait Doble Cero Fresa 242 gramos beber,17,0,Yoplait doble cero 242 gramos beber Variedad
+7501040091261,Yoplait Doble Cero Durazno 242 gramos beber,17,0,Yoplait doble cero 242 gramos beber Variedad
+7501040091247,Yoplait Doble Cero Natural 242 gramos beber,17,0,Yoplait doble cero 242 gramos beber Variedad
+,Yoplait Griego 120 gramos Variedad,14,0,
+7501040098123,Yoplait Griego Moras 120 gramos,14,0,Yoplait Griego 120 gramos Variedad
+7501040098109,Yoplait Griego Natural 120 gramos,14,0,Yoplait Griego 120 gramos Variedad
+7501040098116,Yoplait Griego Fresa 120 gramos,14,0,Yoplait Griego 120 gramos Variedad
+,Yoplait Griego sin azúcar 145 gramos Variedad,17,0,
+7501040095535,Yoplait Griego Natural Sin Azúcar 145 gramos,17,0,Yoplait Griego sin azúcar 145 gramos Variedad
+,Yoplait 120 gramos Variedad,7.5,0,
+7501040075704,Yoplait Natural con probióticos 120 gramos,7.5,0,Yoplait 120 gramos Variedad
+7501040075711,Yoplait Fresa con probióticos 120 gramos,7.5,0,Yoplait 120 gramos Variedad
+,Yoplait 442 gramos Variedad,29,0,
+,Jamón Fud pechuga de pavo Virginia 250 gramos,118,0,
+,Jamón Fud de pavo y cerdo Virginia 290 gramos,80,0,
+,Jamón Fud de pavo Virginia 290 gramos,70,0,
+,Salchichas Fud con pavo 266 gramos,28,0,
+,Salchichas Fud tipo vienna 266 gramos,32,0,
+,Coca-Cola Taparrosca,22,0,
+,Coca-Cola 1.25 litros PET,30,0,
+,Coca-Cola 2.0 litros PET,42,0,
+,Coca-Cola 2.5 litros PET,52,0,
+,Coca-Cola 3.0 litros PET,60,0,
+,Coca-Cola 250 mililitros PET,12,0,
+,Coca-Cola 235 mililitros Vidrio,19,0,
+,Coca-Cola 450 mililitros PET,20,0,
+,Coca-Cola Lata 235 mililitros,19,0,
+,Coca-Cola Lata 355 mililitros,24,0,
+,Coca-Cola Lata 473 mililitros,26,0,
+,Coca-Cola Sabores 600 mililitros,20,0,
+,Coca-Cola Sabores 2 litros,32,0,
+,Coca-Cola Sabores 2.5 litros,37,0,
+,Coca-Cola Light 1 litro PET,30,0,
+,Coca-Cola 500 mililitros Retornable Vidrio,16,0,
+,Coca-Cola 1 litro Retornable Vidrio,23,0,
+,Coca-Cola 1.5 litros Retornable,30,0,
+,Coca-Cola 2.5 litros Retornable,40,0,
+,Monster 473 mililitros,45,0,
+,Predator 473 mililitros,21,0,
+,Jack Daniels,35,0,
+,Flashlyte,25,0,
+,Powerade 600 mililitros,27,0,
+,Powerade 1 litro,36,0,
+,Topochico 600 mililitros,23,0,
+,Topochico 1.5 litros,29,0,
+,Topochico Paloma Lata,28,0,
+,Valle Frut 1 litro,25,0,
+,Valle Frut 2 litros,36,0,
+,Fuze te 600 mililitros,24,0,
+,Fuze te 1 litro,30,0,
+,Del Valle Generosa Vidrio 413 mililitros,20,0,
+,Del Valle Cartón 250 mililitros,14,0,
+,Del Valle 1 litro PET,33,0,
+,Del Valle Arándano 1 litro,35,0,
+,Agua Ciel 600 mililitros,14,0,
+,Agua Ciel 1 litro,17,0,
+,Agua Ciel 1.5 litros,20,0,
+,Agua Ciel Bidón 5 litros,39,0,
+,Agua Ciel sabor 1 litro,19,0,
+,Clamato 473 mililitros,30,0,
+,Arizona 570 mililitros,24,0,
+,Jugo Jumex Cartón 237 mililitros,14,0,
+,Jugo Jumex Latón 460 mililitros,30,0,
+,Amper,22,0,
+,Tonicol 600 mililitros,27,0,
+,Jugo Jumex Cartón 475 mililitros,24,0,
+,Electrolit Sabores 625 mililitros,25,0,
+,Electrolit Sabores 1 litro,35,0,
+,Jugo Jumex Cartón 960 mililitros,32,0,
+,Coca-Cola Sabores 1.5 litros,28,0,
