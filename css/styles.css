@@ -178,8 +178,10 @@ body {
 #tabla-productos {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9em;
+  font-size: 0.82em;
   table-layout: fixed;
+  /* Ancho mínimo total = suma de columnas; permite scroll horizontal en móvil */
+  min-width: 480px;
 }
 
 #tabla-productos thead {
@@ -192,25 +194,36 @@ body {
   background: #1e293b;
   color: #94a3b8;
   font-weight: 600;
-  font-size: 0.8em;
+  font-size: 0.78em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 10px 12px;
+  letter-spacing: 0.04em;
+  padding: 8px 8px;
   text-align: left;
   white-space: nowrap;
 }
 
-.col-codigo  { width: 130px; }
-.col-nombre  { width: auto; min-width: 160px; }
-.col-precio  { width: 80px; }
-.col-relacion { width: 150px; }
-.col-acciones { width: 50px; text-align: center !important; }
+/* ── ANCHOS DE COLUMNA ── ajusta solo estos valores ──────────────
+   col-codigo   : código de barras  → más estrecho = menos px
+   col-nombre   : nombre producto   → width:auto se estira con el espacio libre
+   col-precio   : precio            → corto, solo números
+   col-relacion : relación/variedad → puedes ocultarla en móvil si no la usas
+   col-acciones : botón eliminar    → fijo pequeño
+   ────────────────────────────────────────────────────────────── */
+.col-codigo   { width: 110px; }
+.col-nombre   { width: auto; min-width: 130px; }
+.col-precio   { width: 64px; }
+.col-relacion { width: 120px; }
+.col-acciones { width: 38px; text-align: center !important; }
 
 #tabla-productos td {
-  padding: 8px 12px;
+  padding: 7px 8px;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
   color: #1e293b;
+  /* Evita que texto largo rompa el layout */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fila-producto:hover td { background: #f8fafc; }
