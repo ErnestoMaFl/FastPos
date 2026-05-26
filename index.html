@@ -4,39 +4,80 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>POS Abarrotes Rápido</title>
-  
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
   <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
+  <!-- MODAL CONFIG GITHUB -->
+  <div id="modal-github" class="modal-overlay" style="display:none;">
+    <div class="modal-box">
+      <h3>Configurar GitHub</h3>
+      <p>Para guardar cambios en el CSV necesitas un <strong>Personal Access Token</strong> con permiso <code>repo</code>.</p>
+      <label>Usuario GitHub</label>
+      <input type="text" id="gh-user" placeholder="ErnestoMaFl">
+      <label>Repositorio</label>
+      <input type="text" id="gh-repo" placeholder="FastPos">
+      <label>Token (se guarda en tu navegador)</label>
+      <input type="password" id="gh-token" placeholder="ghp_...">
+      <div class="modal-actions">
+        <button onclick="cerrarModalGithub()">Cancelar</button>
+        <button class="btn-primary" onclick="guardarConfigGithub()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANTALLA BÚSQUEDA -->
   <div id="pantalla-busqueda">
-    
     <div id="reader-container">
       <div id="reader"></div>
     </div>
-
     <div class="search-container">
       <button id="toggleScannerBtn" onclick="toggleScanner()">📷</button>
       <button id="micBtn" onclick="startVoice()">🎤</button>
       <input type="text" id="busqueda" placeholder="Buscar por nombre o código..." oninput="filtrar()" autocomplete="off">
+      <button id="btnTabla" class="btn-tabla activo" onclick="toggleTabla()" title="Mostrar/ocultar tabla">☰</button>
+      <button id="btnGithub" class="btn-github" onclick="abrirModalGithub()" title="Configurar GitHub">⚙️</button>
     </div>
-    
+
     <div id="resultados"></div>
+
+    <!-- TABLA DE PRODUCTOS -->
+    <div id="contenedor-tabla">
+      <div class="tabla-header">
+        <span id="tabla-contador">Cargando productos...</span>
+        <div class="tabla-header-actions">
+          <button class="btn-nuevo-producto" onclick="agregarFilaNueva()">+ Nuevo producto</button>
+          <button id="btn-guardar-csv" class="btn-guardar-csv" onclick="guardarCSVEnGithub()" style="display:none;">💾 Guardar en GitHub</button>
+        </div>
+      </div>
+      <div class="tabla-scroll">
+        <table id="tabla-productos">
+          <thead>
+            <tr>
+              <th class="col-codigo">Código de barra</th>
+              <th class="col-nombre">Producto</th>
+              <th class="col-precio">Precio</th>
+              <th class="col-relacion">Relación</th>
+              <th class="col-acciones">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
+  <!-- PANTALLA CANTIDAD -->
   <div id="pantalla-cantidad">
     <div class="header-cantidad">
       <button class="btn-volver" onclick="volverBusqueda()">← Cancelar</button>
     </div>
-    
     <div class="producto-detalle">
       <h2 id="selNombre">Nombre del Producto</h2>
       <div class="precio-unitario" id="selPrecio">$0.00 x unidad</div>
     </div>
-
     <form onsubmit="confirmar(event)">
       <div class="input-wrapper">
         <label for="inputCantidad">Cantidad:</label>
@@ -48,7 +89,8 @@
       <button type="submit" class="btn-confirmar">✓ Agregar (Enter)</button>
     </form>
   </div>
-  <div id="footer-version" style="text-align: center; padding: 15px; color: #64748b; font-size: 0.85em; margin-top: 20px;">
+
+  <div id="footer-version" style="text-align:center;padding:15px;color:#64748b;font-size:0.85em;margin-top:20px;">
     Versión: Consultando GitHub...
   </div>
 
