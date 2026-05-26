@@ -21,6 +21,12 @@
       <input type="text" id="gh-repo" placeholder="FastPos">
       <label>Token (se guarda en tu navegador)</label>
       <input type="password" id="gh-token" placeholder="ghp_...">
+      <div class="toggle-row">
+        <label class="toggle-label">
+          <input type="checkbox" id="gh-mostrar-relacion" onchange="toggleColumnaRelacion(this.checked)">
+          Mostrar columna Relación en tabla
+        </label>
+      </div>
       <div class="modal-actions">
         <button onclick="cerrarModalGithub()">Cancelar</button>
         <button class="btn-primary" onclick="guardarConfigGithub()">Guardar</button>

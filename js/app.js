@@ -16,7 +16,8 @@ let ticketActual = [];
 let ghConfig = {
   user: localStorage.getItem('gh_user') || 'ErnestoMaFl',
   repo: localStorage.getItem('gh_repo') || 'FastPos',
-  token: localStorage.getItem('gh_token') || ''
+  token: localStorage.getItem('gh_token') || '',
+  mostrarRelacion: localStorage.getItem('gh_mostrar_relacion') === 'true'
 };
 
 function quitarAcentos(texto) {
@@ -32,6 +33,7 @@ fetch('data/productos.csv')
     parsearCSV(csv);
     iniciarEscaner();
     renderizarTabla(productos);
+    aplicarColumnaRelacion();
   })
   .catch(err => {
     console.error("Error cargando productos.csv:", err);
@@ -118,7 +120,7 @@ function filtrar() {
   if (inputVal.trim() === '' || !fuse) {
     mostrar([]);
     // Tabla muestra todos cuando no hay filtro
-    if (tablaVisible) renderizarTabla(productos);
+    if (tablaVisible) { renderizarTabla(productos); aplicarColumnaRelacion(); }
     return;
   }
   const textoBuscado = quitarAcentos(inputVal);
@@ -206,7 +208,7 @@ function volverBusqueda() {
   const searchInput = document.getElementById('busqueda');
   searchInput.value = '';
   mostrar([]);
-  if (tablaVisible) renderizarTabla(productos);
+  if (tablaVisible) { renderizarTabla(productos); aplicarColumnaRelacion(); }
   if (escanerVisible && scannerActivo && html5QrCode.getState() === Html5QrcodeScannerState.PAUSED) {
     html5QrCode.resume();
   }
@@ -443,6 +445,7 @@ function abrirModalGithub() {
   document.getElementById('gh-user').value = ghConfig.user;
   document.getElementById('gh-repo').value = ghConfig.repo;
   document.getElementById('gh-token').value = ghConfig.token;
+  document.getElementById('gh-mostrar-relacion').checked = ghConfig.mostrarRelacion;
   document.getElementById('modal-github').style.display = 'flex';
 }
 
@@ -454,14 +457,31 @@ function guardarConfigGithub() {
   ghConfig.user = document.getElementById('gh-user').value.trim();
   ghConfig.repo = document.getElementById('gh-repo').value.trim();
   ghConfig.token = document.getElementById('gh-token').value.trim();
+  ghConfig.mostrarRelacion = document.getElementById('gh-mostrar-relacion').checked;
   localStorage.setItem('gh_user', ghConfig.user);
   localStorage.setItem('gh_repo', ghConfig.repo);
   localStorage.setItem('gh_token', ghConfig.token);
+  localStorage.setItem('gh_mostrar_relacion', ghConfig.mostrarRelacion);
   cerrarModalGithub();
   // Mostrar botón guardar si hay token
   if (ghConfig.token) {
     document.getElementById('btn-guardar-csv').style.display = 'inline-flex';
   }
+}
+
+// ==========================================
+// TOGGLE COLUMNA RELACIÓN
+// ==========================================
+function toggleColumnaRelacion(mostrar) {
+  ghConfig.mostrarRelacion = mostrar;
+  localStorage.setItem('gh_mostrar_relacion', mostrar);
+  const celdas = document.querySelectorAll('.col-relacion');
+  celdas.forEach(c => c.style.display = mostrar ? '' : 'none');
+}
+
+function aplicarColumnaRelacion() {
+  const celdas = document.querySelectorAll('.col-relacion');
+  celdas.forEach(c => c.style.display = ghConfig.mostrarRelacion ? '' : 'none');
 }
 
 // ==========================================
