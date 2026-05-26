@@ -262,50 +262,71 @@ function renderizarTabla(lista) {
   `).join('');
 }
 
+// span referenciado mientras el modal está abierto
+let _spanEditando = null;
+let _valorOriginalEdicion = '';
+
 function editarCelda(span) {
-  if (span.querySelector('input')) return; // ya está editando
-  const valorActual = span.textContent;
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.value = valorActual;
-  input.className = 'input-celda';
+  _spanEditando = span;
+  _valorOriginalEdicion = span.textContent.trim();
 
-  // Al confirmar (Enter o blur)
-  const guardar = () => {
-    const nuevoValor = input.value.trim();
-    span.textContent = nuevoValor;
-    // Actualizar en el arreglo productos
-    const tr = span.closest('tr');
-    const id = parseInt(tr.dataset.id);
-    const prod = productos.find(p => p._id === id);
-    if (prod) {
-      // Detectar columna por clase del td
-      const td = span.closest('td');
-      if (td.classList.contains('col-codigo')) prod.codigo_de_barra = nuevoValor;
-      else if (td.classList.contains('col-nombre')) {
-        prod.producto = nuevoValor;
-        prod.SearchKey = quitarAcentos(nuevoValor);
-      }
-      else if (td.classList.contains('col-precio')) prod.precio = nuevoValor;
-      else if (td.classList.contains('col-relacion')) prod.relacion = nuevoValor;
-      // Marcar cambios pendientes
-      marcarCambios();
-      // Reconstruir fuse con datos actualizados
-      reconstruirFuse();
+  // Detectar nombre de columna para el título del modal
+  const td = span.closest('td');
+  let nombreCampo = 'Campo';
+  if (td.classList.contains('col-codigo'))   nombreCampo = 'Código de barra';
+  if (td.classList.contains('col-nombre'))   nombreCampo = 'Nombre del producto';
+  if (td.classList.contains('col-precio'))   nombreCampo = 'Precio';
+  if (td.classList.contains('col-relacion')) nombreCampo = 'Relación / variedad';
+
+  // Nombre del producto de esa fila como contexto
+  const tr = span.closest('tr');
+  const id = parseInt(tr.dataset.id);
+  const prod = productos.find(p => p._id === id);
+  const nombreProducto = prod ? prod.producto : '';
+
+  // Rellenar y mostrar modal
+  document.getElementById('modal-edicion-titulo').textContent = nombreCampo;
+  document.getElementById('modal-edicion-producto').textContent = nombreProducto;
+  const inputModal = document.getElementById('modal-edicion-input');
+  inputModal.value = _valorOriginalEdicion;
+  document.getElementById('modal-edicion-celda').style.display = 'flex';
+  setTimeout(() => { inputModal.focus(); inputModal.select(); }, 80);
+}
+
+function confirmarModalEdicion() {
+  if (!_spanEditando) return;
+  const nuevoValor = document.getElementById('modal-edicion-input').value.trim();
+  _spanEditando.textContent = nuevoValor;
+
+  const tr = _spanEditando.closest('tr');
+  const id = parseInt(tr.dataset.id);
+  const prod = productos.find(p => p._id === id);
+  if (prod) {
+    const td = _spanEditando.closest('td');
+    if (td.classList.contains('col-codigo')) prod.codigo_de_barra = nuevoValor;
+    else if (td.classList.contains('col-nombre')) {
+      prod.producto = nuevoValor;
+      prod.SearchKey = quitarAcentos(nuevoValor);
     }
-    tr.classList.add('fila-modificada');
-  };
+    else if (td.classList.contains('col-precio')) prod.precio = nuevoValor;
+    else if (td.classList.contains('col-relacion')) prod.relacion = nuevoValor;
+    marcarCambios();
+    reconstruirFuse();
+  }
+  tr.classList.add('fila-modificada');
+  cerrarModalEdicion();
+}
 
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
-    if (e.key === 'Escape') { span.textContent = valorActual; }
-  });
-  input.addEventListener('blur', guardar);
+function cerrarModalEdicion(event) {
+  // Si el click fue dentro del box, no cerrar
+  if (event && event.target.closest('.modal-edicion-box')) return;
+  document.getElementById('modal-edicion-celda').style.display = 'none';
+  _spanEditando = null;
+}
 
-  span.textContent = '';
-  span.appendChild(input);
-  input.focus();
-  input.select();
+function modalEdicionKeydown(e) {
+  if (e.key === 'Enter') { e.preventDefault(); confirmarModalEdicion(); }
+  if (e.key === 'Escape') { cerrarModalEdicion(); }
 }
 
 function eliminarFila(id) {
