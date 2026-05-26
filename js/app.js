@@ -475,13 +475,18 @@ function guardarConfigGithub() {
 function toggleColumnaRelacion(mostrar) {
   ghConfig.mostrarRelacion = mostrar;
   localStorage.setItem('gh_mostrar_relacion', mostrar);
-  const celdas = document.querySelectorAll('.col-relacion');
-  celdas.forEach(c => c.style.display = mostrar ? '' : 'none');
+  _aplicarVisibilidadRelacion(mostrar);
 }
 
 function aplicarColumnaRelacion() {
+  _aplicarVisibilidadRelacion(ghConfig.mostrarRelacion);
+}
+
+function _aplicarVisibilidadRelacion(mostrar) {
   const celdas = document.querySelectorAll('.col-relacion');
-  celdas.forEach(c => c.style.display = ghConfig.mostrarRelacion ? '' : 'none');
+  celdas.forEach(c => {
+    c.style.setProperty('display', mostrar ? 'table-cell' : 'none', 'important');
+  });
 }
 
 // ==========================================
