@@ -211,9 +211,9 @@ body {
    ────────────────────────────────────────────────────────────── */
 .col-codigo   { width: 110px; }
 .col-nombre   { width: auto; min-width: 130px; }
-.col-precio   { width: 64px; }
-.col-relacion { width: 120px; }
-.col-acciones { width: 38px; text-align: center !important; }
+.col-precio   { width: 70px; }
+.col-relacion { width: 230px; }
+.col-acciones { width: 40px; text-align: center !important; }
 
 #tabla-productos td {
   padding: 7px 8px;
